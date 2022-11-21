@@ -8,12 +8,16 @@ class BaseModel:
     """ defines all common attributes/methods for other classes"""
     def __init__(self, *args, **kwargs):
         """instantiation method"""
-        if bool(kwargs):
-            self.id = kwargs['id']
-            self.created_at = datetime.datetime.strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            self.updated_at = datetime.datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            self.my_number = kwargs['my_number']
-            self.name = kwargs['name']
+        if len(kwargs) > 0:
+            for k, v in kwargs.items():
+                if k == '__class__':
+                    continue
+                elif k == 'created_at':
+                    self.created_at = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                elif k == 'updated_at':
+                    self.updated_at = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                else:
+                    setattr(self, k, v)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
