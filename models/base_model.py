@@ -7,7 +7,13 @@ import datetime
 class BaseModel:
     """ defines all common attributes/methods for other classes"""
     def __init__(self, *args, **kwargs):
-        """instantiation method"""
+        """
+        instantiation method
+
+        Args:
+            *args(any) - not used
+            **kwargs(dict) - attribute name and values
+        """
         if len(kwargs) > 0:
             for k, v in kwargs.items():
                 if k == '__class__':
