@@ -36,6 +36,11 @@ class FileStorage:
                 {k: v.to_dict() for k, v in FileStorage.__objects.items()}, f)
 
     def return_class(self):
+        """return all known classes in the dict form
+
+        Returns:
+            dict: dictioanry of classes
+        """
         the_class = {"BaseModel": BaseModel}
         return the_class
 
@@ -52,5 +57,6 @@ class FileStorage:
                 return
         else:
             return
-        dict_from_json = {k: self.return_class()[v["__class__"]](**v) for k, v in dict_from_json.items()}
+        dict_from_json = {k: self.return_class()[v["__class__"]](**v)
+                          for k, v in dict_from_json.items()}
         FileStorage.__objects = dict_from_json
