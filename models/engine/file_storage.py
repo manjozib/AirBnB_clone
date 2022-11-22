@@ -31,11 +31,15 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        with open(FileStorage.__file_path, 'w') as f:
+        with open(FileStorage.__file_path, "w") as f:
             json.dump(
                 {k: v.to_dict() for k, v in FileStorage.__objects.items()}, f)
 
-    def relode(self):
+    def return_class(self):
+        the_class = {"BaseModel": BaseModel}
+        return the_class
+
+    def reload(self):
         """destralize json from json file"""
         dict_from_json = None
         if os.path.exists(FileStorage.__file_path):
@@ -46,7 +50,7 @@ class FileStorage:
                 pass
             if dict_from_json is None:
                 return
-            for k, v in dict_from_json.items():
-                FileStorage.__objects[k] = v
         else:
             return
+        dict_from_json = {k: self.return_class()[v["__class__"]](**v) for k, v in dict_from_json.items()}
+        FileStorage.__objects = dict_from_json
