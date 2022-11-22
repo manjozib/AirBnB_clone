@@ -1,3 +1,4 @@
+"""create a unique FileStoage instance"""
 from models.engine.file_storage import FileStorage
 
 storage = FileStorage()
