@@ -20,9 +20,11 @@ class BaseModel:
                 if k == '__class__':
                     continue
                 elif k == 'created_at':
-                    self.created_at = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                    self.created_at = \
+                        datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
                 elif k == 'updated_at':
-                    self.updated_at = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                    self.updated_at = \
+                        datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     setattr(self, k, v)
         else:
