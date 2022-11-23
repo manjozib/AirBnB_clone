@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 
 class TestState(unittest.TestCase):
     def test_issubclass(self):
-        """check if User class is sub class of BaseModel"""
+        """check if State class is sub class of BaseModel"""
         self.assertTrue(issubclass(State, BaseModel))
 
     def test_instantiation(self):
@@ -16,5 +16,6 @@ class TestState(unittest.TestCase):
         self.assertIsInstance(new_state, State)
     
     def test_attribute(self):
+        """check if the attribute exist"""
         new_state = State()
         self.assertTrue(hasattr(State, "name"))
