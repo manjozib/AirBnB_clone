@@ -31,8 +31,6 @@ class HBNBCommand(cmd.Cmd):
         elif classes.get(line) is None:
             print("** class doesn't exist **")
         else:
-            print(classes)
-            print(classes[line])
             new_model = classes[line]()
             new_model.save()
             print(new_model.id)
@@ -91,8 +89,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             else:
                 print(new_list)
+
     def do_update(self, line):
-        """ Updates an instance based on the class name and id by 
+        """ Updates an instance based on the class name and id by
         adding or updating attribute"""
         classes = models.storage.return_class()
         lines = line.split(' ')
@@ -117,8 +116,8 @@ class HBNBCommand(cmd.Cmd):
                         lines[3] = int(lines[3])
                 else:
                     if lines[3].startswith('"'):
-                       lines[3] = lines[3].removeprefix('"')
-                       lines[3] = lines[3].removesuffix('"')
+                        lines[3] = lines[3].removeprefix('"')
+                        lines[3] = lines[3].removesuffix('"')
                 setattr(obj, lines[2], lines[3])
                 models.storage.save()
 
