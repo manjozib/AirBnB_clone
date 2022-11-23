@@ -2,6 +2,7 @@
 """Define a HBNBCommand class """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 import models
 
 
@@ -21,8 +22,8 @@ class HBNBCommand(cmd.Cmd):
         """an empty line + ENTER shouldn’t execute anything"""
         return cmd.Cmd.intro
 
-    def do_creat(self, line):
-        """Creates a new instance of BaseModel, saves it
+    def do_create(self, line):
+        """Creates a new instance of given class saves it
         (to the JSON file) and prints the id"""
         classes = models.storage.return_class()
         if len(line) == 0:
@@ -30,7 +31,9 @@ class HBNBCommand(cmd.Cmd):
         elif classes.get(line) is None:
             print("** class doesn't exist **")
         else:
-            new_model = BaseModel()
+            print(classes)
+            print(classes[line])
+            new_model = classes[line]()
             new_model.save()
             print(new_model.id)
 
