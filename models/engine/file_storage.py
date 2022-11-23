@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 
-""" Define FileStorage Classs that serializes instances to a JSON file
+""" Define FileStorage Class that serializes instances to a JSON file
 and deserializes JSON file to instances"""
 
 import json
 import os.path
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -17,7 +18,7 @@ class FileStorage:
         """return dictionary of objects
 
         Returns:
-            dict: dictonary of objects
+            dict: dictionary of objects
         """
         return FileStorage.__objects
 
@@ -39,13 +40,13 @@ class FileStorage:
         """return all known classes in the dict form
 
         Returns:
-            dict: dictioanry of classes
+            dict: dictionary of classes
         """
-        the_class = {"BaseModel": BaseModel}
+        the_class = {"BaseModel": BaseModel, "User": User}
         return the_class
 
     def reload(self):
-        """destralize json from json file"""
+        """deserialize json from json file"""
         dict_from_json = None
         if os.path.exists(FileStorage.__file_path):
             try:
