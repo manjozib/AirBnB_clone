@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
         So this method will take care of the following commands:
         <class name>.all()
         <class name>.count()
-
+        <class name>.show(<id>)
         """
 
         known_classes = models.storage.return_class()
@@ -140,9 +140,14 @@ class HBNBCommand(cmd.Cmd):
             split = re.split(r'\.|\(|\)', line)
             class_name = split[0]
             method_name = split[1]
+            id = split[2]
+            id = id.removeprefix('"')
+            id = id.removesuffix('"')
             output = [str(v) for k, v in models.storage.all().items()]
 
-            if class_name in known_classes:
+            if class_name == '':
+                print("** class name missing **")
+            elif class_name in known_classes:
                 if method_name == 'all':
                     new_list = []
                     for i in range(len(output)):
@@ -156,6 +161,18 @@ class HBNBCommand(cmd.Cmd):
                         if output.__getitem__(i).__contains__(class_name):
                             count += 1
                     print(count)
+                elif method_name == "show":
+                    id = split[2]
+                    id = id.removeprefix('"')
+                    id = id.removesuffix('"')
+                    if id == '':
+                        print("** instance id missing **")
+                    elif not models.storage.all().get(class_name + "." + id):
+                        print("** no instance found **")
+                    else:
+                        print(models.storage.all()[class_name + "." + id])
+            else:
+                print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
