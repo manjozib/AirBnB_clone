@@ -54,6 +54,6 @@ class BaseModel:
         """print [<class name>] (<self.id>) <self.__dict__>
 
         Returns:
-            str: string reprsentation of the class
+            str: string representation of the class
         """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
