@@ -133,6 +133,7 @@ class HBNBCommand(cmd.Cmd):
         <class name>.all()
         <class name>.count()
         <class name>.show(<id>)
+        <class name>.destroy(<id>)
         """
 
         known_classes = models.storage.return_class()
@@ -171,6 +172,18 @@ class HBNBCommand(cmd.Cmd):
                         print("** no instance found **")
                     else:
                         print(models.storage.all()[class_name + "." + id])
+                elif method_name == "destroy":
+                    id = split[2]
+                    id = id.removeprefix('"')
+                    id = id.removesuffix('"')
+                    if id == '':
+                        print("** instance id missing **")
+                    elif not models.storage.all().get(class_name + "." + id):
+                        print("** no instance found **")
+                    else:
+                        del models.storage.all()[class_name + "." + id]
+                        models.storage.save()
+
             else:
                 print("** class doesn't exist **")
 
