@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Define a HBNBCommand class """
 import cmd
+import re
+
 from models.base_model import BaseModel
 from models.user import User
 import models
@@ -120,6 +122,26 @@ class HBNBCommand(cmd.Cmd):
                         lines[3] = lines[3].removesuffix('"')
                 setattr(obj, lines[2], lines[3])
                 models.storage.save()
+
+    # def default(self, line):
+    #     """
+    #     Method called on an input line when the command prefix is
+    #     not recognized for example <class name>.all(), etc, where
+    #     <class name> might be User, BaseModel etc
+    #
+    #     So this method will take care of the following commands:
+    #     <class name>.all()
+    #     """
+    #
+    #     known_classes = models.storage.return_class()
+    #     if '.' in line:
+    #         split = re.split(r'\.|\(|\)', line)
+    #         class_name = split[0]
+    #         method_name = split[1]
+    #
+    #         if class_name in known_classes:
+    #             if method_name == 'all':
+    #                 print([str(v) for k, v in models.storage.all().items() if class_name in v.values()])
 
 
 if __name__ == '__main__':
