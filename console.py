@@ -123,25 +123,39 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, lines[2], lines[3])
                 models.storage.save()
 
-    # def default(self, line):
-    #     """
-    #     Method called on an input line when the command prefix is
-    #     not recognized for example <class name>.all(), etc, where
-    #     <class name> might be User, BaseModel etc
-    #
-    #     So this method will take care of the following commands:
-    #     <class name>.all()
-    #     """
-    #
-    #     known_classes = models.storage.return_class()
-    #     if '.' in line:
-    #         split = re.split(r'\.|\(|\)', line)
-    #         class_name = split[0]
-    #         method_name = split[1]
-    #
-    #         if class_name in known_classes:
-    #             if method_name == 'all':
-    #                 print([str(v) for k, v in models.storage.all().items() if class_name in v.values()])
+    def default(self, line):
+        """
+        Method called on an input line when the command prefix is
+        not recognized for example <class name>.all(), etc, where
+        <class name> might be User, BaseModel etc
+
+        So this method will take care of the following commands:
+        <class name>.all()
+        <class name>.count()
+
+        """
+
+        known_classes = models.storage.return_class()
+        if '.' in line:
+            split = re.split(r'\.|\(|\)', line)
+            class_name = split[0]
+            method_name = split[1]
+            output = [str(v) for k, v in models.storage.all().items()]
+
+            if class_name in known_classes:
+                if method_name == 'all':
+                    new_list = []
+                    for i in range(len(output)):
+                        if output.__getitem__(i).__contains__(class_name):
+                            new_list.append(output.__getitem__(i))
+                    print(new_list)
+
+                elif method_name == "count":
+                    count = 0
+                    for i in range(len(output)):
+                        if output.__getitem__(i).__contains__(class_name):
+                            count += 1
+                    print(count)
 
 
 if __name__ == '__main__':
