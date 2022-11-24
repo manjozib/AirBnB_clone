@@ -7,6 +7,11 @@ import json
 import os.path
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.amenity import Amenity
+from models.city import City
+from models.state import State
+from models.review import Review
 
 
 class FileStorage:
@@ -42,7 +47,13 @@ class FileStorage:
         Returns:
             dict: dictionary of classes
         """
-        the_class = {"BaseModel": BaseModel, "User": User}
+        the_class = {"BaseModel": BaseModel,
+         "User": User,
+         "Place": Place,
+         "City": City,
+         "Review": Review,
+         "Amenity": Amenity,
+         "State": State}
         return the_class
 
     def reload(self):
