@@ -6,6 +6,14 @@ from models.base_model import BaseModel
 
 
 class TestState(unittest.TestCase):
+
+    def test_class(self):
+        """
+        Tests if the class is named correctly.
+        """
+        amenity1 = Amenity()
+        self.assertEqual(amenity1.__class__.__name__, "Amenity")
+
     def test_issubclass(self):
         """check if Amenity class is subclass of BaseModel"""
         self.assertTrue(issubclass(Amenity, BaseModel))
