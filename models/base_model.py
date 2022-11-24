@@ -42,7 +42,7 @@ class BaseModel:
         """dictionary containing all keys/values of __dict__ of the instance:
 
         Returns:
-            dict: a dictonalry containing all of the attributes
+            dict: a dictionary containing all the attributes
         """
         class_dictonary = self.__dict__.copy()
         class_dictonary["__class__"] = self.__class__.__name__
