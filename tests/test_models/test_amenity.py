@@ -7,11 +7,11 @@ from models.base_model import BaseModel
 
 class TestState(unittest.TestCase):
     def test_issubclass(self):
-        """check if Amenity class is sub class of BaseModel"""
+        """check if Amenity class is subclass of BaseModel"""
         self.assertTrue(issubclass(Amenity, BaseModel))
 
     def test_instantiation(self):
-        """check if the object is instnace of the Aminty class"""
+        """check if the object is instance of the Amenity class"""
         new_amenity = Amenity()
         self.assertIsInstance(new_amenity, Amenity)
     
