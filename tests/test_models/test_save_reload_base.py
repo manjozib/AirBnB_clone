@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""Module test_user.py
+unittest for FileStorage.
+"""
+
 
 import unittest
 from models.base_model import BaseModel
@@ -8,6 +12,8 @@ import os.path
 
 
 class TestFileStorgar(unittest.TestCase):
+    """Test FileStorage"""
+
     def test_all_notempty(self):
         """test if the function all works and new works"""
         new_model = BaseModel()
@@ -33,3 +39,7 @@ class TestFileStorgar(unittest.TestCase):
         new_next_model = models.storage.all()
         message = "instance recreated"
         self.assertIsNotNone(new_next_model, message)
+
+
+if __name__ == '__main__':
+    unittest.main()
