@@ -47,12 +47,12 @@ class FileStorage:
             dict: dictionary of classes
         """
         the_class = {"BaseModel": BaseModel,
-         "User": User,
-         "Place": Place,
-         "City": City,
-         "Review": Review,
-         "Amenity": Amenity,
-         "State": State}
+                     "User": User,
+                     "Place": Place,
+                     "City": City,
+                     "Review": Review,
+                     "Amenity": Amenity,
+                     "State": State}
         return the_class
 
     def reload(self):
