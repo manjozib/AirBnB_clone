@@ -1,34 +1,27 @@
 #!/usr/bin/python3
-"""Module test_user.py
-unittest for User.
-"""
-
-
+"""Test suite for the User class in models.user"""
 import unittest
-from models.user import User
 from models.base_model import BaseModel
+
+from models.user import User
 
 
 class TestUser(unittest.TestCase):
-    """class TestUser."""
+    """Test cases against the User class"""
 
-    def test_issubclass(self):
-        """chekc if the User class is subclass of BaseModel"""
-        self.assertTrue(issubclass(User, BaseModel))
+    def test_attrs_are_class_attrs(self):
+        u = User()
+        # test that it is a class attribute
+        self.assertTrue(hasattr(User, "first_name")
+                        and hasattr(User, "last_name"))
 
-    def test_instantiation(self):
-        """check if the object created is instance of User Class"""
-        new_user = User()
-        self.assertIsInstance(new_user, User)
+    def test_class_attrs(self):
+        u = User()
+        self.assertIs(type(u.first_name), str)
+        self.assertIs(type(u.last_name), str)
+        self.assertTrue(u.first_name == "")
+        self.assertTrue(u.last_name == "")
 
-    def test_attributes(self):
-        """check if the attributes exist"""
-        new_user = User()
-        self.assertTrue(hasattr(User, "first_name"))
-        self.assertTrue(hasattr(User, "email"))
-        self.assertTrue(hasattr(User, "password"))
-        self.assertTrue(hasattr(User, "last_name"))
-
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_user_is_a_subclass_of_basemodel(self):
+        u = User()
+        self.assertTrue(issubclass(type(u), BaseModel))
