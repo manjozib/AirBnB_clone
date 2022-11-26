@@ -24,7 +24,7 @@ class FileStorage:
         Returns:
             dict: dictionary of objects
         """
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """add to objects to a dictionary
@@ -32,7 +32,7 @@ class FileStorage:
         Args:
             obj (any): object
         """
-        FileStorage.__objects["{}.{}".format(obj.__class__.__name__, obj.id)] = obj
+        self.__objects["{}.{}".format(obj.__class__.__name__, obj.id)] = obj
 
     def save(self):
         """
@@ -62,9 +62,9 @@ class FileStorage:
     def reload(self):
         """deserialize json from json file"""
         dict_from_json = None
-        if os.path.exists(FileStorage.__file_path):
+        if os.path.exists(self.__file_path):
             try:
-                with open(FileStorage.__file_path, "r") as json_file:
+                with open(self.__file_path, "r") as json_file:
                     dict_from_json = json.load(json_file)
             except FileNotFoundError:
                 return
@@ -72,4 +72,4 @@ class FileStorage:
             return
         dict_from_json = {k: self.return_class()[v["__class__"]](**v)
                           for k, v in dict_from_json.items()}
-        FileStorage.__objects = dict_from_json
+        self.__objects = dict_from_json
