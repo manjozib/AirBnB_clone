@@ -50,14 +50,12 @@ class HBNBCommand(cmd.Cmd):
                     re.sub("[\"\']", "", args[0]),
                     re.sub("[\"\']", "", args[1]), args[2])
 
-
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
 
     def do_EOF(self, line):
         """Ctrl + d to exit the program"""
-        print("")
         return True
 
     def emptyline(self):
