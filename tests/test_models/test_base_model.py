@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""Unittest base_model
+Test cases for class BaseModel.
+"""
+
 
 import unittest
 from datetime import datetime
@@ -6,6 +10,8 @@ from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
+    """Test case for class BaseModel."""
+
     def test_instance(self):
         """test if an object is instance of a given class"""
         new_model = BaseModel()
@@ -61,3 +67,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn('created_at', new_model.to_dict())
         self.assertIn('updated_at', new_model.to_dict())
         self.assertIn('name', new_model.to_dict())
+
+
+if __name__ == '__main__':
+    unittest.main()
