@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""Module test_place.py
+Tests for class Place.
+"""
+
 
 import unittest
 from models.place import Place
@@ -6,6 +10,8 @@ from models.base_model import BaseModel
 
 
 class TestState(unittest.TestCase):
+    """Tests for class Place."""
+
     def test_issubclass(self):
         """check if Place class is sub class of BaseModel"""
         self.assertTrue(issubclass(Place, BaseModel))
@@ -29,3 +35,7 @@ class TestState(unittest.TestCase):
         self.assertTrue(hasattr(Place, "latitude"))
         self.assertTrue(hasattr(Place, "longitude"))
         self.assertTrue(hasattr(Place, "amenity_ids"))
+
+
+if __name__ == '__main__':
+    unittest.main()
