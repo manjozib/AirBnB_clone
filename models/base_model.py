@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """Define a Basemodel class """
+
+
 import uuid
 import datetime
 import models
@@ -7,6 +9,7 @@ import models
 
 class BaseModel:
     """ defines all common attributes/methods for other classes"""
+
     def __init__(self, *args, **kwargs):
         """
         instantiation method
