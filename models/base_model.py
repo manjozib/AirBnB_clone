@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Define a Basemodel class """
+"""
+contains BaseModel definitions.
+"""
 
 
 import uuid
@@ -8,7 +10,9 @@ import models
 
 
 class BaseModel:
-    """ defines all common attributes/methods for other classes"""
+    """ 
+    defines all common attributes/methods for other classes
+    """
 
     def __init__(self, *args, **kwargs):
         """
