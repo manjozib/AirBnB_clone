@@ -12,12 +12,52 @@ class HBNBCommand(cmd.Cmd):
     """customised console class"""
     prompt = '(hbnb)'
 
+    def precmd(self, line):
+        """Defines instructions to execute before <line> is interpreted.
+        """
+        if not line:
+            return '\n'
+
+        pattern = re.compile(r"(\w+)\.(\w+)\((.*)\)")
+        match_list = pattern.findall(line)
+        if not match_list:
+            return super().precmd(line)
+
+        match_tuple = match_list[0]
+        if not match_tuple[2]:
+            if match_tuple[1] == "count":
+                instance_objs = models.storage.all()
+                print(len([
+                    v for _, v in instance_objs.items()
+                    if type(v).__name__ == match_tuple[0]]))
+                return "\n"
+            return "{} {}".format(match_tuple[1], match_tuple[0])
+        else:
+            args = match_tuple[2].split(", ")
+            if len(args) == 1:
+                return "{} {} {}".format(
+                    match_tuple[1], match_tuple[0],
+                    re.sub("[\"\']", "", match_tuple[2]))
+            else:
+                match_json = re.findall(r"{.*}", match_tuple[2])
+                if (match_json):
+                    return "{} {} {} {}".format(
+                        match_tuple[1], match_tuple[0],
+                        re.sub("[\"\']", "", args[0]),
+                        re.sub("\'", "\"", match_json[0]))
+                return "{} {} {} {} {}".format(
+                    match_tuple[1], match_tuple[0],
+                    re.sub("[\"\']", "", args[0]),
+                    re.sub("[\"\']", "", args[1]), args[2])
+
+
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
 
     def do_EOF(self, line):
         """Ctrl + d to exit the program"""
+        print("")
         return True
 
     def emptyline(self):
@@ -74,22 +114,20 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """Prints all string representation of all instances
         based or not on the class name"""
-        a = 0
         new_list = []
         if len(line) == 0:
             print([str(v) for k, v in models.storage.all().items()])
         else:
-            lines = line.split(' ')
-            for k, v in models.storage.all().items():
-                key = k.split('.')
-                if key[0] == line:
-                    a += 1
-                    new_list.append(str(v))
-                else:
-                    continue
-            if a == 0:
+            lines = line.split()
+            if lines[0] not in models.storage.return_class():
                 print("** class doesn't exist **")
             else:
+                for k, v in models.storage.all().items():
+                    key = k.split('.')
+                    if key[0] == line:
+                        new_list.append(str(v))
+                    else:
+                        continue
                 print(new_list)
 
     def do_update(self, line):
@@ -122,70 +160,6 @@ class HBNBCommand(cmd.Cmd):
                         lines[3] = lines[3].removesuffix('"')
                 setattr(obj, lines[2], lines[3])
                 models.storage.save()
-
-    def default(self, line):
-        """
-        Method called on an input line when the command prefix is
-        not recognized for example <class name>.all(), etc, where
-        <class name> might be User, BaseModel etc
-
-        So this method will take care of the following commands:
-        <class name>.all()
-        <class name>.count()
-        <class name>.show(<id>)
-        <class name>.destroy(<id>)
-        """
-
-        known_classes = models.storage.return_class()
-        if '.' in line:
-            split = re.split(r'\.|\(|\)', line)
-            class_name = split[0]
-            method_name = split[1]
-            id = split[2]
-            id = id.removeprefix('"')
-            id = id.removesuffix('"')
-            output = [str(v) for k, v in models.storage.all().items()]
-
-            if class_name == '':
-                print("** class name missing **")
-            elif class_name in known_classes:
-                if method_name == 'all':
-                    new_list = []
-                    for i in range(len(output)):
-                        if output.__getitem__(i).__contains__(class_name):
-                            new_list.append(output.__getitem__(i))
-                    print(new_list)
-
-                elif method_name == "count":
-                    count = 0
-                    for i in range(len(output)):
-                        if output.__getitem__(i).__contains__(class_name):
-                            count += 1
-                    print(count)
-                elif method_name == "show":
-                    id = split[2]
-                    id = id.removeprefix('"')
-                    id = id.removesuffix('"')
-                    if id == '':
-                        print("** instance id missing **")
-                    elif not models.storage.all().get(class_name + "." + id):
-                        print("** no instance found **")
-                    else:
-                        print(models.storage.all()[class_name + "." + id])
-                elif method_name == "destroy":
-                    id = split[2]
-                    id = id.removeprefix('"')
-                    id = id.removesuffix('"')
-                    if id == '':
-                        print("** instance id missing **")
-                    elif not models.storage.all().get(class_name + "." + id):
-                        print("** no instance found **")
-                    else:
-                        del models.storage.all()[class_name + "." + id]
-                        models.storage.save()
-
-            else:
-                print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
