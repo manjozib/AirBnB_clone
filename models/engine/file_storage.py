@@ -32,13 +32,17 @@ class FileStorage:
         Args:
             obj (any): object
         """
-        FileStorage.__objects[obj.__class__.__name__ + "." + obj.id] = obj
+        FileStorage.__objects["{}.{}".format(obj.__class__.__name__, obj.id)] = obj
 
     def save(self):
-        """serializes __objects to the JSON file (path: __file_path)"""
-        with open(FileStorage.__file_path, "w") as f:
-            json.dump(
-                {k: v.to_dict() for k, v in FileStorage.__objects.items()}, f)
+        """
+        Serialize __objects to the JSON file
+        """
+        with open(self.__file_path, mode="w") as f:
+            dict_storage = {}
+            for k, v in self.__objects.items():
+                dict_storage[k] = v.to_dict()
+            json.dump(dict_storage, f)
 
     def return_class(self):
         """return all known classes in the dict form
@@ -62,9 +66,7 @@ class FileStorage:
             try:
                 with open(FileStorage.__file_path, "r") as json_file:
                     dict_from_json = json.load(json_file)
-            except json.JSONDecodeError:
-                pass
-            if dict_from_json is None:
+            except FileNotFoundError:
                 return
         else:
             return
