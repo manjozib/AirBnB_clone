@@ -36,6 +36,7 @@ button:hover {
 .amenities {
     position: fixed;
     width: 250px;
+    height: 70px;
 }
 
 .locations {
